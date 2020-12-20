@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color:rgba(20, 11, 14, 0.835);
+        }
+        *{
+            box-sizing: border-box;
+            color:rgb(207, 202, 202) !important;
+        }
+        .calculator{
+            width: 470px;
+            margin:100px auto;
+        }
+        .result{
+            width: 100%;
+            text-align:end;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .key{
+            width: 500px;
+        }
+        .key button{
+            display: inline-block;
+            width:100px;
+            height: 100px;
+            margin: 10px;
+            border-radius: 50px;
+            border: none;
+            outline: none;
+            background-color:rgba(44, 38, 38, 0.883);
+            color: white;
+
+        }
+        .ACbtn{
+            width: 220px  !important;
+        }
+        .T.title{
+            color: white;
+            text-align: center;
+            margin-left: 10px;
+        }
+     
+    </style>
+</head>
+<h1 class="T title">Your calculator  &diams;</h4>
+<div class="calculator">
+    <h1 class="result">0</h1>
+    <div class="key"></div>
+</div>
+<body>
+    <script>
+        let calculator=document.querySelector(".calculator")
+        let result=document.querySelector(".result")
+        let key=document.querySelector(".key")
+
+        let calkey=["AC",'+','-','*','/','.','=','C','%']
+        function addbtn(x){
+            let btn=document.createElement("button")
+            let text=document.createTextNode(x)
+            btn.setAttribute('onclick',`toresult('${x}')`)
+            if(x=='='){
+                btn.setAttribute('onclick','calculate()')
+            }
+             else if(x=='C'){
+                btn.setAttribute('onclick','c()')
+            }
+            else if(x=='AC'){
+                btn.setAttribute('class','ACbtn')
+                btn.setAttribute('onclick','allclear()')
+            }
+            btn.appendChild(text)
+            key.appendChild(btn)
+        }
+            function c(){
+                let current=result.innerHTML
+                if(current.length==1){
+                    result.innerHTML=0
+                }else{
+                    result.innerHTML=current.substring(0,current.length-1)
+                }
+            }
+        function calculate(){
+            let resources=result.innerHTML
+            result.innerHTML=eval(resources)
+        }
+        function toresult(x){
+            let current=result.innerHTML
+            let lastindex=current[current.length-1]
+            if(result.innerHTML==0){
+                return result.innerHTML=x
+            }else if(calkey.includes(x) && calkey.includes(lastindex) ){
+                return result.innerHTML=current.substring(0,current.length-1)+x
+            }else{
+                return  result.innerHTML+=x
+            }
+           
+        
+        }
+        calkey.map(function(el){
+            addbtn(`${el}`)
+        })
+        for(i=0;i<10;i++){
+            addbtn(i)
+        }
+        function allclear(){
+            result.innerHTML=0
+        }
+    </script>
+</body>
+</html>
